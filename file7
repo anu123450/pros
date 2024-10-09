@@ -1,0 +1,85 @@
+SERVER SIDE VALIDATION
+<?php
+$errorMsg = '';
+$emp_name = '';
+$emp_number = '';
+$emp_email = '';
+
+if (isset($_POST['Submit'])) {
+    $emp_name = trim($_POST["emp_name"]);
+    $emp_number = trim($_POST["emp_number"]);
+    $emp_email = trim($_POST["emp_email"]);
+
+    if (empty($emp_name)) {
+        $errorMsg = "Error: You did not enter a name.";
+        $code = "1";
+    } elseif (empty($emp_number)) {
+        $errorMsg = "Error: Please enter a number.";
+        $code = "2";
+    } elseif (!is_numeric($emp_number)) {
+        $errorMsg = "Error: Please enter a numeric value.";
+        $code = "2";
+    } elseif (strlen($emp_number) < 10) {
+        $errorMsg = "Error: Number should be ten digits.";
+        $code = "2";
+    } elseif (empty($emp_email)) {
+        $errorMsg = "Error: You did not enter an email.";
+        $code = "3";
+    } elseif (!filter_var($emp_email, FILTER_VALIDATE_EMAIL)) {
+        $errorMsg = "Error: You did not enter a valid email.";
+        $code = "3";
+    } else {
+        echo "Success";
+        // Optionally, process the data (e.g., save to database)
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Employee Information Sample HTML Form</title>
+    <style type="text/css">
+        .errorMsg { border: 1px solid red; }
+        .message { color: red; font-weight: bold; }
+        body { font-family: Arial, sans-serif; }
+        table { margin: auto; }
+    </style>
+</head>
+<body>
+    <?php if ($errorMsg): ?>
+        <p class="message"><?php echo $errorMsg; ?></p>
+    <?php endif; ?>
+    
+    <form name="registration" id="registration" method="post" action="">
+        <table width="400" border="0" cellpadding="4" cellspacing="1">
+            <tr>
+                <td>Employee Name:</td>
+                <td>
+                    <input name="emp_name" type="text" id="emp_name" value="<?php echo htmlspecialchars($emp_name); ?>" 
+                    <?php if (isset($code) && $code == 1) echo 'class="errorMsg"'; ?>>
+                </td>
+            </tr>
+            <tr>
+                <td>Contact No.:</td>
+                <td>
+                    <input name="emp_number" type="text" id="emp_number" value="<?php echo htmlspecialchars($emp_number); ?>" 
+                    <?php if (isset($code) && $code == 2) echo 'class="errorMsg"'; ?>>
+                </td>
+            </tr>
+            <tr>
+                <td>Personal Email:</td>
+                <td>
+                    <input name="emp_email" type="text" id="emp_email" value="<?php echo htmlspecialchars($emp_email); ?>" 
+                    <?php if (isset($code) && $code == 3) echo 'class="errorMsg"'; ?>>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" name="Submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
