@@ -1,0 +1,96 @@
+<?php
+$res = '';
+
+if (isset($_POST['disp'])) {
+    $s = $_POST['s'];
+    $ch = $_POST['ch'];
+    
+    switch ($ch) {
+        case 'STRING LENGTH':
+            $res = strlen($s);
+            break;
+        case 'WORD COUNT':
+            $res = str_word_count($s);
+            break;
+        case 'STRING REVERSE':
+            $res = strrev($s);
+            break;
+        case 'POSITION OF A CHARACTER':
+            $char = $_POST['char'] ?? 'a'; // Default character to search for
+            $res = strpos($s, $char) !== false ? strpos($s, $char) : "Character not found.";
+            break;
+        case 'STRING REPLACE':
+            $res = str_replace("hello", "world", $s);
+            break;
+        case 'STRING SPLIT':
+            $res = implode(", ", str_split($s, 1));
+            break;
+        case 'PASSWORD GENERATOR':
+            $data = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            $res = substr(str_shuffle($data), 0, 7);
+            break;
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Handling</title>
+    <style>
+        body {
+            background-color: cyan;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            margin: auto;
+            border: 3px solid black;
+        }
+        th {
+            background-color: forestgreen;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <th colspan="2">STRING HANDLING</th>
+            </tr>
+            <tr>
+                <td>Enter String:</td>
+                <td><input type="text" name="s" required></td>
+            </tr>
+            <tr>
+                <td>Select Your Choice:</td>
+                <td>
+                    <select name="ch" required>
+                        <option value="">--Select--</option>
+                        <option>STRING LENGTH</option>
+                        <option>WORD COUNT</option>
+                        <option>STRING REVERSE</option>
+                        <option>POSITION OF A CHARACTER</option>
+                        <option>STRING REPLACE</option>
+                        <option>STRING SPLIT</option>
+                        <option>PASSWORD GENERATOR</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Character (for Position):</td>
+                <td><input type="text" name="char" maxlength="1"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="RESULT" name="disp"></td>
+            </tr>
+            <tr>
+                <td>Result:</td>
+                <td><input type="text" value="<?php echo htmlspecialchars($res); ?>" readonly /></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
