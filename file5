@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Functions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: square;
+        }
+    </style>
+</head>
+<body>
+    <?php
+    
+    function displayArray($array) {
+        echo "<ul>";
+        foreach ($array as $value) {
+            echo "<li>" . htmlspecialchars($value) . "</li>";
+        }
+        echo "</ul>";
+    }
+
+    function findLargest($array) {
+        return max($array);
+    }
+
+    if (isset($_POST['submit'])) {
+        
+        $numbers = array_map('trim', explode(",", $_POST['numbers']));
+        
+       
+        if (array_filter($numbers, 'is_numeric')) {
+            
+            echo "<h2>Original Array:</h2>";
+            displayArray($numbers);
+            
+            sort($numbers);
+            echo "<h2>Sorted Array:</h2>";
+            displayArray($numbers);
+            
+            echo "<h2>Largest Value:</h2>";
+            echo htmlspecialchars(findLargest($numbers));
+        } else {
+            echo "<p style='color: red;'>Please enter valid numbers separated by commas.</p>";
+        }
+    } else {
+        
+    ?>
+        <h1>Enter Numbers</h1>
+        <form method="post" action="">
+            <label for="numbers">Enter numbers separated by commas:</label><br>
+            <input type="text" id="numbers" name="numbers" required><br><br>
+            <input type="submit" name="submit" value="Submit">
+        </form>
+    <?php
+    }
+    ?>
+</body>
+</html>
