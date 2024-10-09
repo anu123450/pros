@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Course Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        table {
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Course Registration</h1>
+    <form action="course.php" method="get">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td><input type="text" name="name" required></td>
+            </tr>
+            <tr>
+                <th>SSLC Mark</th>
+                <td><input type="number" name="sslcmrk" required></td>
+            </tr>
+            <tr>
+                <th>HSC Mark</th>
+                <td><input type="number" name="hscmrk" required></td>
+            </tr>
+            <tr>
+                <th>Courses</th>
+                <td>
+                    <select name="course" required>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Computer Science with Cognitive Systems">Computer Science with Cognitive Systems</option>
+                        <option value="Computer Science with Artificial Intelligence">Computer Science with Artificial Intelligence</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="B.Sc CS with Cyber Security">B.Sc CS with Cyber Security</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+
+course.php
+<?php
+$name = htmlspecialchars($_GET["name"]);
+$sslc = htmlspecialchars($_GET["sslcmrk"]);
+$hsc = htmlspecialchars($_GET["hscmrk"]);
+$course = htmlspecialchars($_GET["course"]);
+
+echo "<b>NAME:</b> $name<br>";
+echo "<b>SSLC MARK:</b> $sslc<br>";
+echo "<b>HSC MARK:</b> $hsc<br>";
+echo "<b>COURSE SELECTED:</b> $course<br>";
+?>
